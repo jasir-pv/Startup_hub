@@ -5,10 +5,21 @@ import { Button } from "./ui/button";
 
 
 
-const StartupCard = ({post}: {post: StartupCardType}) => {
+const StartupCard = ({post}: {post: StartupTypeCard}) => {
 
-    const {_createdAt, views, author:{_id:authorId,name}, title,
-category, _id,image,description} =post;
+    const {
+        _createdAt,
+        views,
+        author,
+        title,
+        category,
+        _id,
+        image,
+        description,
+      } = post;
+    
+      const authorId = author?._id; // Safely access author._id
+      const name = author?.name; // Safely access author.name
 
   return (
     <li className="startup-card group">
