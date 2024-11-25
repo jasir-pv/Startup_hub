@@ -22,7 +22,7 @@ export const authorType = defineType({
     }),
     defineField({
       name: 'email',
-      type: 'image',
+      type: 'string',
       
     }),
     defineField({
@@ -38,7 +38,6 @@ export const authorType = defineType({
   preview: {
     select: {
       title: 'name',
-      media: 'image',
     },
   },
 })
