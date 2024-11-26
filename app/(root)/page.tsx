@@ -1,8 +1,8 @@
 import Image from "next/image";
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
-import { client } from "@/sanity/lib/client";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import { STARTUPS_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 
 export default async function Home({searchParams}:{
   
@@ -12,18 +12,7 @@ export default async function Home({searchParams}:{
 
   const query = (await searchParams).query
 
-  const posts = await client.fetch(STARTUPS_QUERY)
-
-  // const posts = [{_createdAt: new Date(),
-  //               views: '55',
-  //               author: {_id:1, name: 'Jasir'},
-  //               _id: 1,
-  //               description: "This is a description",
-  //               image:"https://cdn.pixabay.com/photo/2015/06/12/18/31/cute-807306_640.png",
-  //               category: 'Robots',
-  //               title: 'We Robots',
-  //           },
-  //         ];
+  const {data: posts} = await sanityFetch({query: STARTUPS_QUERY})
 
 
   return (
@@ -44,7 +33,7 @@ export default async function Home({searchParams}:{
 
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
-            posts.map((post: StartupCardType, index:number) =>(
+            posts.map((post: StartupTypeCard, index:number) =>(
               <StartupCard key={post?._id} post={post}/>
             ))
           ): (
@@ -53,6 +42,8 @@ export default async function Home({searchParams}:{
 
         </ul>
       </section>
+
+      <SanityLive/>
 
    </>
   );
