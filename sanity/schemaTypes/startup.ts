@@ -20,7 +20,7 @@ export const startupType = defineType({
       }
     }),
     defineField({
-        name: "author",
+        name: 'author',
         type: "reference",
         to:{type:'author'}
     }),
