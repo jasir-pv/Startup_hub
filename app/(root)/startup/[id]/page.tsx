@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation'
 import markdownit from 'markdown-it'
 import { Skeleton } from '@/components/ui/skeleton'
 import View from '@/components/view'
+import { auth } from '@/auth'
 
 const md = markdownit()
 
@@ -18,6 +19,10 @@ const page = async ( {params}: {params: Promise<{id: string}>}) => {
 
     const id = (await params ).id
     const post = await client.fetch(STARTUP_BY_ID_QUERY, { id })
+
+    const session = await auth()
+
+    console.log(session?.id)
 
     if(!post) return notFound()
 
