@@ -2,8 +2,8 @@ import React from 'react'
 import Ping from './Ping'
 import { STARTUP_VIEWS_QUERY } from '@/sanity/lib/queries'
 import { client } from '@/sanity/lib/client'
-import { wirteClient } from '@/sanity/lib/write-client'
 import { unstable_after as after } from 'next/server'
+import { writeClient } from '@/sanity/lib/write-client'
 
 
 
@@ -15,7 +15,7 @@ const View = async ({id}: {id: string}) => {
 
     after(
       async ()=>
-      await wirteClient
+      await writeClient
     .patch(id)
     .set({views: totalViews+1})
     .commit()
