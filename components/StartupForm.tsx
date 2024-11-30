@@ -1,11 +1,13 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor'
 import { Button } from './ui/button';
 import { Send } from 'lucide-react';
+import { z } from "zod"
+import { formSchema } from '@/lib/validation';
 
 
 const StartupForm = () => {
@@ -13,11 +15,53 @@ const StartupForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState("");
 
-  const isPending = false
+  const handleFormSubmit= async (prevState: any, formData: FormData)=>{
+    try {
+      const formValues = {
+        title: formData.get("title") as string,
+        description: formData.get("description") as string,
+        category: formData.get("category") as string,
+        link: formData.get("link") as string,
+        pitch,
+      }
+      await formSchema.parseAsync(formValues);
+
+
+      console.log(formValues)
+
+      // const result = await createPitch(prevState, formData, pitch);
+
+
+      // return result;
+
+    } catch (error) {
+
+      if (error instanceof z.ZodError) {
+        const fieldErorrs = error.flatten().fieldErrors;
+
+        setErrors(fieldErorrs as unknown as Record<string, string>);
+  
+  
+        return { ...prevState, error: "Validation failed", status: "ERROR" };
+
+        return {
+          ...prevState,
+          error: "An unexpected error has occurred",
+          status: "ERROR",
+        };
+
+      }
+  }
+
+  const [state, formAction, isPending] = useActionState(handleFormSubmit,
+    {error: "" ,
+     status:'INITIAL'}
+  )
+
 
   return (
     <div>
-      <form action={()=> {}} className='startup-form'>
+      <form action={formAction} className='startup-form'>
         {/* input title */}
         <div>
             <label htmlFor="title" className='startup-form_label'>Title</label>
@@ -98,6 +142,9 @@ const StartupForm = () => {
 
     </div>
   )
-}
+  }
+
+
+
 
 export default StartupForm
