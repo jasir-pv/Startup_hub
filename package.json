@@ -2,7 +2,7 @@
   "name": "startup",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
+
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,10 +10,15 @@
     "lint": "next lint",
     "predev": "npm run typegen",
     "prebuild": "npm run typegen",
-    "type": "module",
+
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
   },
   "packageManager": "npm@10.9.0",
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom",
+    "next": "$next"
+  },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
