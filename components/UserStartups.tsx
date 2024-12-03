@@ -10,7 +10,7 @@ const UserStartups = async ({id} : {id: string}) => {
   return (
     <>
     {startups.length > 0 ? (
-      startups.map((startup: StartupCardType) => (
+      startups.map((startup: StartupTypeCard) => (
         <StartupCard key={startup._id} post={startup} />
       ))
     ) : (
