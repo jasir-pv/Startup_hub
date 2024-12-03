@@ -6,13 +6,13 @@ import { PLAYLIST_BY_SLUG_QUERY, STARTUP_BY_ID_QUERY } from '@/sanity/lib/querie
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import markdownit from 'markdown-it'
+import markdownit from 'markdown-it';
 import { Skeleton } from '@/components/ui/skeleton'
 import View from '@/components/View'
 import { auth } from '@/auth'
 import StartupCard, { StartupTypeCard } from '@/components/StartupCard'
 
-const md = markdownit()
+const md = markdownit();
 
 export const experimental_ppr = true
 
